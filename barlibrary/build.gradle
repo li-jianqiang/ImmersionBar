@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.li-jianqiang'
 
 android {
     compileSdkVersion 26
@@ -53,5 +55,5 @@ publish {
     artifactId = 'barlibrary'
     publishVersion = '2.3.0'
     desc = 'Android bar management'
-    website = 'https://github.com/gyf-dev/ImmersionBar'
+    website = 'https://github.com/li-jianqiang/ImmersionBar'
 }
