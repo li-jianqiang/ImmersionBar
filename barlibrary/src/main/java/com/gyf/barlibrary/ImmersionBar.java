@@ -1439,6 +1439,7 @@ public class ImmersionBar {
         }
         if (OSUtils.isMIUI6Later())
             setMIUIStatusBarDarkFont(mWindow, mBarParams.darkFont);         //修改miui状态栏字体颜色
+
         if (OSUtils.isFlymeOS4Later()) {          // 修改Flyme OS状态栏字体颜色
             if (mBarParams.flymeOSStatusBarFontColor != 0) {
                 FlymeOSStatusBarFontUtils.setStatusBarDarkIcon(mActivity, mBarParams.flymeOSStatusBarFontColor);
@@ -1876,7 +1877,7 @@ public class ImmersionBar {
      * @return boolean 成功执行返回true
      */
     private void setMIUIStatusBarDarkFont(Window window, boolean darkFont) {
-        if (window != null) {
+        /*if (window != null) {
             Class clazz = window.getClass();
             try {
                 int darkModeFlag;
@@ -1888,6 +1889,32 @@ public class ImmersionBar {
                     extraFlagField.invoke(window, darkModeFlag, darkModeFlag);//状态栏透明且黑色字体
                 } else {
                     extraFlagField.invoke(window, 0, darkModeFlag);//清除黑色字体
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }*/
+        if (window != null) {
+            Class clazz = window.getClass();
+            try {
+                int darkModeFlag;
+                Class layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+                Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+                darkModeFlag = field.getInt(layoutParams);
+                Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+                extraFlagField.invoke(window, darkFont ? darkModeFlag : 0, darkModeFlag);
+                if (darkFont) {
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                } else {
+                    int flag = 0;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                        flag = window.getDecorView().getSystemUiVisibility()
+                                & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+                        window.getDecorView().setSystemUiVisibility(flag);
+                    }
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
