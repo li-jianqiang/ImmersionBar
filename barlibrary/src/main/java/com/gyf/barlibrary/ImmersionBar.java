@@ -1473,9 +1473,10 @@ public class ImmersionBar {
         else
             mWindow.setStatusBarColor(ColorUtils.blendARGB(mBarParams.statusBarColor,
                     Color.TRANSPARENT, mBarParams.statusBarAlpha));  //设置状态栏颜色
-        if (mBarParams.navigationBarEnable)
-            mWindow.setNavigationBarColor(ColorUtils.blendARGB(mBarParams.navigationBarColor,
-                    mBarParams.navigationBarColorTransform, mBarParams.navigationBarAlpha));  //设置导航栏颜色
+        // 180419去掉默认导航栏颜色
+//        if (mBarParams.navigationBarEnable)
+//            mWindow.setNavigationBarColor(ColorUtils.blendARGB(mBarParams.navigationBarColor,
+//                    mBarParams.navigationBarColorTransform, mBarParams.navigationBarAlpha));  //设置导航栏颜色
         return uiFlags;
     }
 
