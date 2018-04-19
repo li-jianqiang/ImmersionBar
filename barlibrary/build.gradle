@@ -51,10 +51,11 @@ task makeJar(type: Copy) {
 makeJar.dependsOn(build)
 
 publish {
-    userOrg = 'magic-dev'
-    groupId = 'com.gyf.barlibrary'
+    userOrg = 'lijianqiang-dev'
+    groupId = 'com.mengyo.barlibrary'
+    repoName='maven'
     artifactId = 'barlibrary'
-    publishVersion = '2.3.0'
+    publishVersion = '2.3.2'
     desc = 'Android bar management'
     website = 'https://github.com/li-jianqiang/ImmersionBar'
 }
